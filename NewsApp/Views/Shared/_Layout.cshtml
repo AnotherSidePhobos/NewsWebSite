@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @await Html.PartialAsync("_CssPartial")
+    </head>
+
+
+    <body class="is-preload">
+
+        <!-- Wrapper -->
+        <div id="wrapper">
+
+            @await Html.PartialAsync("_HeaderPartial")
+
+            <!-- Menu -->
+            @await Html.PartialAsync("_MenuPartial")
+
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+            <!-- Sidebar -->
+            @await Html.PartialAsync("_SideBarPartial")
+
+        </div>
+
+        @await Html.PartialAsync("_ScriptsPartial")
+
+    </body>
+</html>
