@@ -45,15 +45,18 @@
 
         @if (_signInManager.IsSignedIn(User))
         {
-        <ul class="actions stacked">
-            <li class="button large fit lbnHello">Hello! @User.Identity.Name</li>
-            <li><a id="registerLink" class="button large fit" asp-controller="Account" asp-action="Logout">Log off</a></li>
-        </ul>
+            <ul class="actions stacked">
+                <li class="button large fit lbnHello">Hello! @User.Identity.Name</li>
+                <li><a id="registerLink" class="button large fit" asp-area="" asp-controller="Account" asp-action="Logout">Log off</a></li>
+            </ul>
         }
         else
         {
             <ul class="actions stacked">
                 <li><a href="account/login" class="button large fit">Log In</a></li>
+            </ul>
+            <ul class="actions stacked">
+                <li><a href="account/register" class="button large fit">Sign Up</a></li>
             </ul>
         }
 

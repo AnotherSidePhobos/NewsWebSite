@@ -12,10 +12,12 @@ namespace NewsApp.Domain.Entities
         [Display(Name = "Название статьи")]
         public override string Title { get; set; }
 
-        [Display(Name = "Краткое описание статьи")]
+        [Display(Name = "Краткое описание заголовка")]
         public override string Subtitle { get; set; }
 
         [Display(Name = "Полное описание статьи")]
-        public override string Article { get; set; }
+        public override string FullText { get; set; }
+        [Display(Name = "Краткое описание статьи")]
+        public string ShortText { get; set; }
     }
 }

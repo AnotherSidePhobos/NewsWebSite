@@ -1,4 +1,5 @@
-﻿using NewsApp.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NewsApp.Domain.Entities;
 using NewsApp.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,10 @@ namespace NewsApp.Domain.Repositories.EntityFrameWork
         }
         public void SaveArticle(ArticleItem article)
         {
-            _db.ArticleItems.Add(article);
+            if (article.Id == default)
+                _db.Entry(article).State = EntityState.Added;
+            else
+                _db.Entry(article).State = EntityState.Modified;
             _db.SaveChanges();
         }
         public void UpdateArticle(int id)

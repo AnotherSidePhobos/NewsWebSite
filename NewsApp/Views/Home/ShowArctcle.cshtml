@@ -1,0 +1,10 @@
+﻿@model ArticleItem
+@{
+    ViewData["Title"] = "ShowArctcle";
+}
+
+
+<h1>@Model.Title</h1>
+<h3>@Model.Subtitle</h3>
+<img src="@Model.TitleImagePath" alt="pic" />
+<p>@Model.FullText</p>

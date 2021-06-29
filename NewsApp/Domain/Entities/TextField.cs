@@ -16,6 +16,6 @@ namespace NewsApp.Domain.Entities
         public override string Title { get; set; } = "Информационная страница";
 
         [Display(Name = "Cодержание страницы")]
-        public override string Article { get; set; } = "Содержание заполняется администратором";
+        public override string FullText { get; set; } = "Содержание заполняется администратором";
     }
 }

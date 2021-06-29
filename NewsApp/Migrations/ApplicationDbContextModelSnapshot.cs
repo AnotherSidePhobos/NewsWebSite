@@ -49,7 +49,7 @@ namespace NewsApp.Migrations
                         new
                         {
                             Id = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "f737d533-4e3d-4056-8fd9-38281aaadb93",
+                            ConcurrencyStamp = "30f7a6cd-f01d-4ff4-82be-9db666ee337e",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -148,13 +148,13 @@ namespace NewsApp.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4c69b5d5-55be-4ccf-ba6b-70e43955188c",
+                            ConcurrencyStamp = "5f3a9812-7a27-43c1-9466-fce5e6555782",
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJkyWsBT3Irki4Mw4OfXNBzAzldz7IQ7cPw0K9PMFYf2d52oxljzGuZh0ZqZvRkE+Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENEu9bZLWiDAeZtU0PySxNRmtWyHvVm26BfJoxYx9hZSKEf7x/2XQ+mNztSWd97E2A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -256,11 +256,17 @@ namespace NewsApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Article")
+                    b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FullText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortText")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subtitle")
                         .HasColumnType("nvarchar(max)");
@@ -284,7 +290,7 @@ namespace NewsApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Article")
+                    b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CodeWord")
@@ -293,6 +299,13 @@ namespace NewsApp.Migrations
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FullText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortText")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Subtitle")
                         .HasColumnType("nvarchar(max)");
@@ -311,25 +324,25 @@ namespace NewsApp.Migrations
                         new
                         {
                             Id = 1,
-                            Article = "Содержание заполняется администратором",
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2021, 6, 28, 19, 55, 34, 595, DateTimeKind.Utc).AddTicks(1172),
+                            DateAdded = new DateTime(2021, 6, 29, 23, 4, 2, 96, DateTimeKind.Local).AddTicks(819),
+                            FullText = "Содержание заполняется администратором",
                             Title = "Главная"
                         },
                         new
                         {
                             Id = 2,
-                            Article = "Содержание заполняется администратором",
                             CodeWord = "PageServices",
-                            DateAdded = new DateTime(2021, 6, 28, 19, 55, 34, 595, DateTimeKind.Utc).AddTicks(3165),
+                            DateAdded = new DateTime(2021, 6, 29, 23, 4, 2, 97, DateTimeKind.Local).AddTicks(165),
+                            FullText = "Содержание заполняется администратором",
                             Title = "Статьи"
                         },
                         new
                         {
                             Id = 3,
-                            Article = "Содержание заполняется администратором",
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2021, 6, 28, 19, 55, 34, 595, DateTimeKind.Utc).AddTicks(3187),
+                            DateAdded = new DateTime(2021, 6, 29, 23, 4, 2, 97, DateTimeKind.Local).AddTicks(204),
+                            FullText = "Содержание заполняется администратором",
                             Title = "Контакты"
                         });
                 });
