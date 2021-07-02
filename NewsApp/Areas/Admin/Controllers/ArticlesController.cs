@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewsApp.Domain;
 using NewsApp.Domain.Entities;
+using NewsApp.Models;
 using NewsApp.Service;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace NewsApp.Areas.Admin.Controllers
     {
 
         private readonly DataManager _dataManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public ArticlesController(DataManager dataManager, IWebHostEnvironment hostEnvironment, SignInManager<IdentityUser> signInManager)
+        public ArticlesController(DataManager dataManager, IWebHostEnvironment hostEnvironment, SignInManager<ApplicationUser> signInManager)
         {
             _dataManager = dataManager;
             _hostEnvironment = hostEnvironment;
@@ -51,7 +52,10 @@ namespace NewsApp.Areas.Admin.Controllers
                 {
                     model.Author = User.Identity.Name;
                 }
-                model.ShortText = model.FullText.Substring(0, 100) + "...";
+                if (model.FullText.Length > 99)
+                {
+                    model.ShortText = model.FullText.Substring(0, 100) + "...";
+                }
                 _dataManager.articleItemRepository.SaveArticle(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }

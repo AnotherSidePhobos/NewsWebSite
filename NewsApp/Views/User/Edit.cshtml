@@ -1,0 +1,42 @@
+﻿@model ApplicationUser
+@{
+    string strTitle = "Редактировать запись";
+    <h3 style="color: red">Внимаение! После обновления Ваших данных необходимо будет авторизоваться снова!</h3>
+    ViewBag.Title = strTitle;
+}
+
+<script src="~/js/ckeditor/ckeditor.js"></script>
+
+<div>
+    <h2>@strTitle</h2>
+    <div>
+        <form asp-controller="User" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ImagePath" />
+
+            <div asp-validation-summary="All"></div>
+            <div class="div-box">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" />
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <div class="div-box imgLogo">
+                <label asp-for="ImagePath"></label>
+                <input type="file" name="titleImageFile" id="titleImageFile" />
+                <div>
+                    <img class="imgLogo" src="@Model.ImagePath" />
+                </div>
+            </div>
+            <input type="submit" value="Сохранить" />
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    window.onload = function() {
+        @*var newCKEdit = CKEDITOR.replace('@Html.IdFor(x=>x.FullText)');*@
+        newCKEdit.updateElement();
+    }
+</script>

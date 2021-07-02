@@ -3609,3 +3609,13 @@ input, select, textarea {
 			}
 
 		}
+
+#like {
+	cursor: pointer;
+}
+.imgLogo{
+	height: 100%;
+	width: 100%;
+	max-height: 400px;
+	max-width: 500px;
+}

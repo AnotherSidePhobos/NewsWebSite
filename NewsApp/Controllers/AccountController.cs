@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewsApp.Models;
 using NewsApp.Models.ViewComponents;
+using NewsApp.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,16 @@ namespace NewsApp.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-
-        public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SendingEmail _sendingEmail;
+        public AccountController(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager, SendingEmail sendingEmail)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _sendingEmail = sendingEmail;
+            
         }
 
 
@@ -36,7 +39,7 @@ namespace NewsApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = await _userManager.FindByNameAsync(model.UserName);
+                ApplicationUser user = await _userManager.FindByNameAsync(model.UserName);
                 if (user != null)
                 {
                     await _signInManager.SignOutAsync();
@@ -72,7 +75,7 @@ namespace NewsApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser()
+                var user = new ApplicationUser()
                 {
                     UserName = model.UserName,
                     Email = model.Email,
@@ -83,6 +86,7 @@ namespace NewsApp.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, Utility.Helper.User);
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    _sendingEmail.SendEmailKit(model.Email);
                     return RedirectToAction("Index", "Home");
                 }
                 foreach (var error in result.Errors)

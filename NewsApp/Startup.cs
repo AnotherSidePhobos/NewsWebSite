@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using NewsApp.Domain;
 using NewsApp.Domain.Repositories.Abstract;
 using NewsApp.Domain.Repositories.EntityFrameWork;
+using NewsApp.Models;
 using NewsApp.Service;
 using System;
 using System.Collections.Generic;
@@ -28,15 +29,17 @@ namespace NewsApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
-            services.AddDbContext<ApplicationDbContext>(s => s.UseSqlServer(Config.ConnectionString));
+            services.AddTransient<SendingEmail>();
             services.AddTransient<IArticleItemRepository, ArticleItemRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITextFieldsRepository, TextFieldsRepository>();
             services.AddTransient<DataManager>();
+            //services.AddTransient<NewsApp.Domain.Repositories.Abstract.IUserRepository, NewsApp.Domain.Repositories.EntityFrameWork.UserRepository>();
+            services.AddDbContext<ApplicationDbContext>(s => s.UseSqlServer(Config.ConnectionString));
+            services.AddControllersWithViews();
 
 
-            services.AddIdentity<IdentityUser, IdentityRole>(opts =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
                 opts.Password.RequiredLength = 6;

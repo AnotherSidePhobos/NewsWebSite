@@ -30,5 +30,10 @@ namespace NewsApp.Controllers
             var arct =  dataManager.articleItemRepository.GetArticleById(Id);
             return View(arct);
         }
+        public IActionResult Contacts()
+        {
+            var contact = dataManager.textFieldsRepository.GetTextFieldByCodeWord("PageContacts");
+            return View(contact);
+        }
     }
 }

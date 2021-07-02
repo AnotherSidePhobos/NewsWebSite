@@ -32,6 +32,5 @@ namespace NewsApp.Areas.Admin.Controllers
             }
             return View(model);
         }
-
     }
 }

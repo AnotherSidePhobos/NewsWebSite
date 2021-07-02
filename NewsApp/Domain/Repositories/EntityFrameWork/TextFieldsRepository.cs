@@ -1,4 +1,5 @@
-﻿using NewsApp.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NewsApp.Domain.Entities;
 using NewsApp.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,10 @@ namespace NewsApp.Domain.Repositories.EntityFrameWork
 
         public void SaveTextField(TextField entity)
         {
-            _db.Add(entity);
+            if (entity.Id == default)
+                _db.Entry(entity).State = EntityState.Added;
+            else
+                _db.Entry(entity).State = EntityState.Modified;
             _db.SaveChanges();
         }
     }

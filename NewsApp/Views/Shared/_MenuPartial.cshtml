@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> _signInManager
+
+@inject SignInManager<ApplicationUser> _signInManager
 
 <section id="menu">
 
@@ -46,6 +47,8 @@
         @if (_signInManager.IsSignedIn(User))
         {
             <ul class="actions stacked">
+                <a asp-area="" asp-controller="User" asp-action="Edit" asp-route-name="@User.Identity.Name" asp-route-id="@this.User">Edit User @User.Identity.Name</a>
+
                 <li class="button large fit lbnHello">Hello! @User.Identity.Name</li>
                 <li><a id="registerLink" class="button large fit" asp-area="" asp-controller="Account" asp-action="Logout">Log off</a></li>
             </ul>

@@ -10,11 +10,13 @@ namespace NewsApp.Domain
     {
         public IArticleItemRepository articleItemRepository;
         public ITextFieldsRepository textFieldsRepository;
+        public IUserRepository userRepository;
         public DataManager(IArticleItemRepository articleItemRepository,
-           ITextFieldsRepository textFieldsRepository)
+           ITextFieldsRepository textFieldsRepository, IUserRepository userRepository)
         {
             this.articleItemRepository = articleItemRepository;
             this.textFieldsRepository = textFieldsRepository;
+            this.userRepository = userRepository;
         }
     }
 }

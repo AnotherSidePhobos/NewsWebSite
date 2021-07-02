@@ -1,4 +1,13 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿let likes = document.querySelectorAll('.fa-heart');
 
-// Write your JavaScript code.
+
+
+console.log(likes);
+
+for (let like of likes) {
+    like.addEventListener('click', (e) => {
+        let count = like.innerHTML;
+        count++;
+        like.innerHTML = count;
+    });
+}
