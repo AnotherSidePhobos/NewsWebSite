@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NewsApp.Domain;
+using NewsApp.Domain.Entities;
 using NewsApp.Models;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,17 @@ namespace NewsApp.Controllers
         public IActionResult Index()
         {
             var articles = dataManager.articleItemRepository.GetAllArticleItems();
+
             return View(articles);
         }
+        [HttpPost]
+        public IActionResult Index(ArticleItem model)
+        {
+            var articles = dataManager.articleItemRepository.GetAllArticleItems().Where(n => n.Title.Contains(model.SearchText));
+
+            return View(articles);
+        }
+
         public IActionResult ShowArctcle(int Id)
         {
             var arct =  dataManager.articleItemRepository.GetArticleById(Id);

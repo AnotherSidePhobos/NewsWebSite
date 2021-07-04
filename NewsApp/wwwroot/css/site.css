@@ -75,7 +75,66 @@ body {
     margin-bottom: 60px;
 }
 .imgL{
-    margin-left: 96px;
-    max-height: 150px;
-    max-width: 150px;
+    /*margin-left: 96px;*/
+    max-height: 350px;
+    max-width: 350px;
+}
+.editLink{
+    text-align: center;
+    text-decoration:none;
+}
+
+/*Footer*/
+.FeedBackLink {
+    color: black;
+    float: right;
+    cursor: pointer;
+}
+
+    .FeedBackLink:hover {
+        text-decoration: none;
+        color: darkblue;
+    }
+/*Footer*/
+.modal{
+    margin-top: 100px;
+}
+
+
+
+.links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: left;
+}
+
+.links a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 20px 50px;
+    display: block;
+    transition: .3s;
+}
+
+.links a:hover {
+    color: blue;
+}
+
+.indicator {
+    height: 5px;
+    background: orange;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-radius: 3px;
+    transition: .3s;
+}
+.wrpapperInSearchForm {
+    
+    display: flex;
+    justify-content: space-around;
 }

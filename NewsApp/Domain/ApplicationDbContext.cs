@@ -16,6 +16,8 @@ namespace NewsApp.Domain
 
         public DbSet<ArticleItem> ArticleItems { get; set; }
         public DbSet<TextField> TextFields { get; set; }
+        public DbSet<FeedBack> FeedBacks { get; set; }
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

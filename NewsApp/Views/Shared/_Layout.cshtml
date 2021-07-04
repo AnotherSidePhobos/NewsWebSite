@@ -1,32 +1,34 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        @await Html.PartialAsync("_CssPartial")
-    </head>
+<head>
+    @await Html.PartialAsync("_CssPartial")
+</head>
 
 
-    <body class="is-preload">
+<body class="is-preload">
 
-        <!-- Wrapper -->
-        <div id="wrapper">
-            
-            @await Html.PartialAsync("_HeaderPartial")
+    <!-- Wrapper -->
+    <div id="wrapper">
 
-            <!-- Menu -->
-            @await Html.PartialAsync("_MenuPartial")
+        @await Html.PartialAsync("_HeaderPartial")
 
-            <div class="container">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
+        <!-- Menu -->
+        @await Html.PartialAsync("_MenuPartial")
 
-            <!-- Sidebar -->
-            @await Html.PartialAsync("_SideBarPartial")
-
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
+        <partial name="_AddFeedBack" />
 
-        @await Html.PartialAsync("_ScriptsPartial")
+        <!-- Sidebar -->
+        @await Html.PartialAsync("_SideBarPartial")
 
-    </body>
+    </div>
+
+    @await Html.PartialAsync("_ScriptsPartial")
+
+</body>
 </html>
+@RenderSection("Scripts", false)

@@ -6,40 +6,50 @@
 <!-- Main -->
 <div id="main">
 
+    <li style="list-style-type: none;" class="search">
+        <form id="search" method="post" action="Home/index">
+            <div class="wrpapperInSearchForm">
+                <div><input type="text" name="query" placeholder="Search" /></div>
+                <div><button type="submit">Search</button></div>
+            </div>
+
+        </form>
+    </li>
+
     <!-- Post -->
+    @foreach (var item in Model)
+    {
+        <article class="post">
+            <header>
+                <div class="title">
+                    <h2><a asp-controller="Home" asp-action="ShowArctcle" asp-route-Id="@item.Id">@item.Title</a></h2>
+                    <p>@item.Subtitle</p>
+                </div>
+                <div class="meta">
+                    <time class="published" datetime="2015-11-01">@item.DateAdded</time>
+                    <a href="#" class="author"><span class="name">@item.Author</span><img src="@item.TitleImagePath" alt="" /></a>
+                </div>
+            </header>
+            <a asp-controller="Home" asp-action="ShowArctcle" asp-route-Id="@item.Id" class="image featured"><img src="@item.TitleImagePath" alt="" /></a>
+            <p>@Html.Raw(item.ShortText)</p>
+            <footer>
+                <ul class="actions">
+                    <li><a asp-controller="Home" asp-action="ShowArctcle" asp-route-Id="@item.Id" class="button large">Continue Reading</a></li>
+                </ul>
+                <ul class="stats">
+                    <li><a href="#">General</a></li>
+                    <li><a id="like" class="icon solid fa-heart">28</a></li>
+                    @*<li><a href="#" class="icon solid fa-comment">128</a></li>*@
+                </ul>
+            </footer>
+        </article>
+    }
 
-        @foreach (var item in Model)
-        {
-            <article class="post">
-                <header>
-                    <div class="title">
-                        <h2><a asp-controller="Home" asp-action="ShowArctcle" asp-route-Id="@item.Id">@item.Title</a></h2>
-                        <p>@item.Subtitle</p>
-                    </div>
-                    <div class="meta">
-                        <time class="published" datetime="2015-11-01">@item.DateAdded</time>
-                        <a href="#" class="author"><span class="name">@item.Author</span><img src="@item.TitleImagePath" alt="" /></a>
-                    </div>
-                </header>
-                <a asp-controller="Home" asp-action="ShowArctcle" asp-route-Id="@item.Id" class="image featured"><img src="@item.TitleImagePath" alt="" /></a>
-                <p>@item.ShortText</p>
-                <footer>
-                    <ul class="actions">
-                        <li><a asp-controller="Home" asp-action="ShowArctcle" asp-route-Id="@item.Id" class="button large">Continue Reading</a></li>
-                    </ul>
-                    <ul class="stats">
-                        <li><a href="#">General</a></li>
-                        <li><a id="like" class="icon solid fa-heart">28</a></li>
-                        @*<li><a href="#" class="icon solid fa-comment">128</a></li>*@
-                    </ul>
-                </footer>
-            </article>
-        }
+    <!-- Pagination -->
+    <ul class="actions pagination">
+        <li><a href="" class="disabled button large previous">Previous Page</a></li>
+        <li><a href="#" class="button large next">Next Page</a></li>
+    </ul>
 
-        <!-- Pagination -->
-        <ul class="actions pagination">
-            <li><a href="" class="disabled button large previous">Previous Page</a></li>
-            <li><a href="#" class="button large next">Next Page</a></li>
-        </ul>
+</div>
 
-    </div>

@@ -4,9 +4,6 @@
     ViewBag.Title = strTitle;
 }
 
-
-@if (User.IsInRole("admin"))
-{
 <div>
     <h2>@strTitle</h2>
     <div>
@@ -45,10 +42,4 @@
         </form>
     </div>
 </div>
-}
-else
-{
-<p>Необходимо быть администратором</p>
-<p>Или чьим-нибудь сыном</p>
-}
 

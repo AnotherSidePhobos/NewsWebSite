@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,6 +34,7 @@ namespace NewsApp
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IServiceFB, ServiceFB>();
             services.AddTransient<SendingEmail>();
             services.AddTransient<IArticleItemRepository, ArticleItemRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
@@ -41,6 +43,7 @@ namespace NewsApp
             //services.AddTransient<NewsApp.Domain.Repositories.Abstract.IUserRepository, NewsApp.Domain.Repositories.EntityFrameWork.UserRepository>();
             services.AddDbContext<ApplicationDbContext>(s => s.UseSqlServer(Config.ConnectionString));
             services.AddControllersWithViews();
+            services.AddPaging();
 
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
@@ -64,6 +67,18 @@ namespace NewsApp
             });
 
             Configuration.Bind("Project", new Config());
+
+            services.AddAuthorization(x =>
+            {
+                x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
+                // мы добавляем политику с название: AdminArea
+                // и тем самым требуем от пользователя, чтобы у него была роль admin.
+            });
+
+            services.AddControllersWithViews(x =>
+            {
+                x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -78,6 +93,7 @@ namespace NewsApp
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();

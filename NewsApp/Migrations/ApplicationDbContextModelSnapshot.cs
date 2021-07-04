@@ -166,6 +166,9 @@ namespace NewsApp.Migrations
                     b.Property<string>("FullText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SearchText")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShortText")
                         .HasColumnType("nvarchar(max)");
 
@@ -288,6 +291,24 @@ namespace NewsApp.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("NewsApp.Models.FeedBack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FeedBacks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

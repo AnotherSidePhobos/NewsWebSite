@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MimeKit;
+using NewsApp.Models.ViewModals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,34 @@ namespace NewsApp.Service
                     client.Send(message);
                     logger.LogInformation("Message sent successfully");
                     
+                    client.Disconnect(true);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e.Message);
+            }
+
+        }
+
+
+        public void SendEmailAboutFeedBack(FeedBackVM data, string email)
+        {
+            try
+            {
+                MimeMessage message = new MimeMessage();
+                message.From.Add(new MailboxAddress(email));
+                message.To.Add(new MailboxAddress("alexmelentev01@gmail.com"));
+                message.Subject = $"Message from {data.Author}";
+                message.Body = new BodyBuilder() { TextBody = $"{data.Author} sent you message: {data.Comment}" }.ToMessageBody();
+
+                using (MailKit.Net.Smtp.SmtpClient client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 465, true);
+                    client.Authenticate("alexmelentev01@gmail.com", "Hrenmorzhovyi1@");
+                    client.Send(message);
+                    logger.LogInformation("Message sent successfully");
+
                     client.Disconnect(true);
                 }
             }

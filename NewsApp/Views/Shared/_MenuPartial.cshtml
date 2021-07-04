@@ -4,42 +4,6 @@
 
 <section id="menu">
 
-    <!-- Search -->
-    <section>
-        <form class="search" method="get" action="#" enctype="multipart/form-data">
-            <input type="text" name="query" placeholder="Search" />
-        </form>
-    </section>
-
-    <!-- Links -->
-    <section>
-        <ul class="links">
-            <li>
-                <a href="#">
-                    <h3>Lorem ipsum</h3>
-                    <p>Feugiat tempus veroeros dolor</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Dolor sit amet</h3>
-                    <p>Sed vitae justo condimentum</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Feugiat veroeros</h3>
-                    <p>Phasellus sed ultricies mi congue</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Etiam sed consequat</h3>
-                    <p>Porta lectus amet ultricies</p>
-                </a>
-            </li>
-        </ul>
-    </section>
 
     <!-- Actions -->
     <section>
@@ -49,20 +13,20 @@
 
             string imgName = "~/images/" + @User.Identity.Name + ".jpg";
             <img class="imgL" src='@Url.Content(imgName)' alt="img" />
-            <ul class="actions stacked">
-                <a style="text-align:center" asp-area="" asp-controller="User" asp-action="Edit" asp-route-name="@User.Identity.Name" asp-route-id="@this.User">Edit User @User.Identity.Name</a>
+            <ul class="borderBtm actions stacked">
 
                 <li class="button large fit lbnHello">Hello! @User.Identity.Name</li>
                 <li><a id="registerLink" class="button large fit" asp-area="" asp-controller="Account" asp-action="Logout">Log off</a></li>
+                <a class="editLink" asp-area="" asp-controller="User" asp-action="Edit" asp-route-name="@User.Identity.Name" asp-route-id="@this.User">Edit User @User.Identity.Name</a>
             </ul>
         }
         else
         {
             <ul class="actions stacked">
-                <li><a href="account/login" class="button large fit">Log In</a></li>
+                <li><a asp-area="" asp-controller="Account" asp-action="login" class="button large fit">Log In</a></li>
             </ul>
             <ul class="actions stacked">
-                <li><a href="account/register" class="button large fit">Sign Up</a></li>
+                <li><a asp-area="" asp-controller="Account" asp-action="register" class="button large fit">Sign Up</a></li>
             </ul>
         }
 

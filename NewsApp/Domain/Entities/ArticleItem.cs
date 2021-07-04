@@ -19,5 +19,7 @@ namespace NewsApp.Domain.Entities
         public override string FullText { get; set; }
         [Display(Name = "Краткое описание статьи")]
         public string ShortText { get; set; }
+
+        public string SearchText { get; set; }
     }
 }
