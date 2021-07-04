@@ -74,3 +74,8 @@ body {
     max-width: 500px;
     margin-bottom: 60px;
 }
+.imgL{
+    margin-left: 96px;
+    max-height: 150px;
+    max-width: 150px;
+}

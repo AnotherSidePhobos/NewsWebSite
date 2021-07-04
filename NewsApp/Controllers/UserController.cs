@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NewsApp.Domain;
 using NewsApp.Models;
 using NewsApp.Service;
@@ -21,38 +22,18 @@ namespace NewsApp.Areas.Admin.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ApplicationDbContext _db;
-        public UserController(DataManager dataManager, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
+
+        private readonly ILogger<UserController> logger;
+
+        public UserController(DataManager dataManager, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext db, ILogger<UserController> logger)
         {
             _dataManager = dataManager;
             _hostEnvironment = hostEnvironment;
             _userManager = userManager;
             this.signInManager = signInManager;
+            this.logger = logger;
             _db = db;
         }
-        //public IActionResult Edit(string name)
-        //{
-        //    var user = _dataManager.userRepository.GetUserByName(name);
-            
-        //    return View(user);
-        //}
-        //[HttpPost]
-        //public IActionResult Edit(ApplicationUser model, IFormFile titleImageFile)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (titleImageFile != null)
-        //        {
-        //            using (var stream = new FileStream(Path.Combine(_hostEnvironment.WebRootPath, "/images/", titleImageFile.FileName), FileMode.Create))
-        //            {
-        //                titleImageFile.CopyTo(stream);
-        //            }
-        //        }
-        //        _dataManager.userRepository.SaveUser(model);
-        //        return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-        //    }
-        //    return View(model);
-        //}
-
 
         public async Task UpdateUserDisaplyName(string userId, string displayName, string filename)
         {
@@ -76,18 +57,51 @@ namespace NewsApp.Areas.Admin.Controllers
         }
 
 
+        private void Rename(string oldName, string newName)
+        {
+
+            try
+            {
+                System.IO.File.Move(oldName, newName);
+
+                if (System.IO.File.Exists(oldName))
+                {
+                    System.IO.File.Delete(oldName);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e.Message);
+            }
+            
+        }
+
         [HttpPost]
         public async Task<IActionResult> Edit(ApplicationUser model, IFormFile titleImageFile)
         {
             if (ModelState.IsValid)
             {
+                var nameOfPic = model.UserName;
+
+
                 var user = await _userManager.FindByIdAsync(model.Id);
 
-                using (var stream = new FileStream(Path.Combine(_hostEnvironment.WebRootPath, "images/", titleImageFile.FileName), FileMode.Create))
+                if (titleImageFile != null)
                 {
-                    titleImageFile.CopyTo(stream);
+                    using (var stream = new FileStream(Path.Combine(_hostEnvironment.WebRootPath, "images/", nameOfPic + ".jpg"/*titleImageFile.FileName*/), FileMode.Create))
+                    {
+                        titleImageFile.CopyTo(stream);
+                    }
                 }
-                await UpdateUserDisaplyName(user.Id, model.UserName, titleImageFile.FileName);
+                else
+                {
+                    string oldName = "wwwroot/images/" + user.UserName + ".jpg";
+                    string newName = "wwwroot/images/" + model.UserName + ".jpg";
+
+                    Rename(oldName, newName);
+                }
+
+                await UpdateUserDisaplyName(user.Id, model.UserName, nameOfPic + ".jpg"/* titleImageFile.FileName*/);
             }
             signInManager.SignOutAsync();
             return RedirectToAction("End");
@@ -98,6 +112,11 @@ namespace NewsApp.Areas.Admin.Controllers
 
             return View();
         }
+
+
+
+
+
 
     }
 }

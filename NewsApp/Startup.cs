@@ -21,9 +21,13 @@ namespace NewsApp
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
+        private readonly ApplicationDbContext _db;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public Startup(IConfiguration configuration/*, ApplicationDbContext db, SignInManager<ApplicationUser> signInManager*/)
         {
             Configuration = configuration;
+            //_db = db;
+            //_signInManager = signInManager;
         }
 
 
@@ -86,6 +90,13 @@ namespace NewsApp
 
             app.UseEndpoints(endpoints =>
             {
+                //if (_signInManager.Context.User.Identity.IsAuthenticated)
+                //{
+                //    var NameOfuser = _signInManager.Context.User.Identity.Name;
+                //    var currentUser = _db.Users.Where(n => n.UserName == NameOfuser).FirstOrDefault();
+                //}
+                
+
                 endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",

@@ -2,7 +2,6 @@
 
 
 
-console.log(likes);
 
 for (let like of likes) {
     like.addEventListener('click', (e) => {
@@ -11,3 +10,8 @@ for (let like of likes) {
         like.innerHTML = count;
     });
 }
+
+
+
+let logoName = document.querySelector('.nameOfUser');
+console.log(logoName);

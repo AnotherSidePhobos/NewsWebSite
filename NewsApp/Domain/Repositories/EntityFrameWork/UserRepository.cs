@@ -24,22 +24,6 @@ namespace NewsApp.Domain.Repositories.EntityFrameWork
         }
 
 
-        //public async Task UpdateUserDisaplyName(string userId, string displayName)
-        //{
-        //    var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
-        //    if (user != null)
-        //    {
-        //        user.UserName = displayName;
-        //        user.ImagePath = user.ImagePath;
-        //        await _db.SaveChangesAsync();
-        //    }
-        //}
-
-
-
-
-
-
 
 
         public void SaveUser(ApplicationUser user)
