@@ -14,23 +14,31 @@ namespace NewsApp.Controllers
     public class HomeController : Controller
     {
         private readonly DataManager dataManager;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(DataManager dataManager)
+        public HomeController(DataManager dataManager, ApplicationDbContext db)
         {
             this.dataManager = dataManager;
+            _db = db;
         }
 
 
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    var articles = dataManager.articleItemRepository.GetAllArticleItems();
+
+        //    return View(articles);
+        //}
+
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            var articles = dataManager.articleItemRepository.GetAllArticleItems();
-
-            return View(articles);
+            return View(await PaginatedList<ArticleItem>.CreatAsync(_db.ArticleItems, pageNumber, 2));
         }
+
         [HttpPost]
         public IActionResult Index(ArticleItem model)
         {
-            var articles = dataManager.articleItemRepository.GetAllArticleItems().Where(n => n.Title.Contains(model.SearchText));
+            var articles = dataManager.articleItemRepository.GetAllArticleItems();
 
             return View(articles);
         }

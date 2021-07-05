@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NewsApp.Domain.Entities.ArticleItem>
+﻿@model PaginatedList<NewsApp.Domain.Entities.ArticleItem>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -45,11 +45,15 @@
         </article>
     }
 
-    <!-- Pagination -->
-    <ul class="actions pagination">
-        <li><a href="" class="disabled button large previous">Previous Page</a></li>
-        <li><a href="#" class="button large next">Next Page</a></li>
-    </ul>
+
+
+    @{
+        var prevDisabled = !Model.PriviousPage ? "disabled" : "";
+        var nextDisabled = !Model.NextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="button large  @prevDisabled"> Previous </a>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="button large  @nextDisabled"> Next </a>
 
 </div>
 
